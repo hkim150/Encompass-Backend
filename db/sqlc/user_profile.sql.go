@@ -20,8 +20,8 @@ RETURNING user_account_id, zipcode, timezone
 `
 
 type CreateUserProfileParams struct {
-	Zipcode  sql.NullString
-	Timezone sql.NullString
+	Zipcode  sql.NullString `json:"zipcode"`
+	Timezone sql.NullString `json:"timezone"`
 }
 
 func (q *Queries) CreateUserProfile(ctx context.Context, arg CreateUserProfileParams) (UserProfile, error) {
@@ -61,8 +61,8 @@ OFFSET $2
 `
 
 type ListUserProfilesParams struct {
-	Limit  int32
-	Offset int32
+	Limit  int32 `json:"limit"`
+	Offset int32 `json:"offset"`
 }
 
 func (q *Queries) ListUserProfiles(ctx context.Context, arg ListUserProfilesParams) ([]UserProfile, error) {
@@ -97,9 +97,9 @@ RETURNING user_account_id, zipcode, timezone
 `
 
 type UpdateUserProfileParams struct {
-	UserAccountID int64
-	Zipcode       sql.NullString
-	Timezone      sql.NullString
+	UserAccountID int64          `json:"user_account_id"`
+	Zipcode       sql.NullString `json:"zipcode"`
+	Timezone      sql.NullString `json:"timezone"`
 }
 
 func (q *Queries) UpdateUserProfile(ctx context.Context, arg UpdateUserProfileParams) (UserProfile, error) {

@@ -20,11 +20,11 @@ RETURNING deal_id, author, store_name, description, regular_price, sale_price, u
 `
 
 type CreateDealParams struct {
-	Author       int64
-	StoreName    string
-	Description  string
-	RegularPrice sql.NullString
-	SalePrice    sql.NullString
+	Author       int64          `json:"author"`
+	StoreName    string         `json:"store_name"`
+	Description  string         `json:"description"`
+	RegularPrice sql.NullString `json:"regular_price"`
+	SalePrice    sql.NullString `json:"sale_price"`
 }
 
 func (q *Queries) CreateDeal(ctx context.Context, arg CreateDealParams) (Deal, error) {
@@ -88,8 +88,8 @@ OFFSET $2
 `
 
 type ListDealsParams struct {
-	Limit  int32
-	Offset int32
+	Limit  int32 `json:"limit"`
+	Offset int32 `json:"offset"`
 }
 
 func (q *Queries) ListDeals(ctx context.Context, arg ListDealsParams) ([]Deal, error) {
@@ -135,11 +135,11 @@ RETURNING deal_id, author, store_name, description, regular_price, sale_price, u
 `
 
 type UpdateDealParams struct {
-	DealID       int64
-	StoreName    string
-	Description  string
-	RegularPrice sql.NullString
-	SalePrice    sql.NullString
+	DealID       int64          `json:"deal_id"`
+	StoreName    string         `json:"store_name"`
+	Description  string         `json:"description"`
+	RegularPrice sql.NullString `json:"regular_price"`
+	SalePrice    sql.NullString `json:"sale_price"`
 }
 
 func (q *Queries) UpdateDeal(ctx context.Context, arg UpdateDealParams) (Deal, error) {

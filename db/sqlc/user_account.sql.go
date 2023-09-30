@@ -19,8 +19,8 @@ RETURNING user_account_id, username, email, create_time
 `
 
 type CreateUserAccountParams struct {
-	Username string
-	Email    string
+	Username string `json:"username"`
+	Email    string `json:"email"`
 }
 
 func (q *Queries) CreateUserAccount(ctx context.Context, arg CreateUserAccountParams) (UserAccount, error) {
@@ -70,8 +70,8 @@ OFFSET $2
 `
 
 type ListUserAccountsParams struct {
-	Limit  int32
-	Offset int32
+	Limit  int32 `json:"limit"`
+	Offset int32 `json:"offset"`
 }
 
 func (q *Queries) ListUserAccounts(ctx context.Context, arg ListUserAccountsParams) ([]UserAccount, error) {
@@ -111,9 +111,9 @@ RETURNING user_account_id, username, email, create_time
 `
 
 type UpdateUserAccountParams struct {
-	UserAccountID int64
-	Username      string
-	Email         string
+	UserAccountID int64  `json:"user_account_id"`
+	Username      string `json:"username"`
+	Email         string `json:"email"`
 }
 
 func (q *Queries) UpdateUserAccount(ctx context.Context, arg UpdateUserAccountParams) (UserAccount, error) {
