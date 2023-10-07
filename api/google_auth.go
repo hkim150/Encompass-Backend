@@ -1,12 +1,11 @@
 package api
 
 import (
+	"encompass/util"
 	"io"
-	"log"
 	"net/http"
 	"os"
 
-	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
@@ -17,10 +16,11 @@ var (
 )
 
 func init() {
+	util.LoadEnv(".env")
 	googleOauthConfig = &oauth2.Config{
 		RedirectURL:  "http://localhost:1323/callback",
-		ClientID:     getEnvVar("GOOGLE_CLIENT_ID"),
-		ClientSecret: getEnvVar("GOOGLE_CLIENT_SECRET"),
+		ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),
+		ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
 		Scopes: []string{
 			"https://www.googleapis.com/auth/userinfo.email",
 			"https://www.googleapis.com/auth/userinfo.profile",
@@ -58,14 +58,4 @@ func CallbackHandler(c echo.Context) error {
 
 	return c.String(http.StatusOK, string(userData))
 
-}
-
-func getEnvVar(key string) string {
-	err := godotenv.Load(".env")
-
-	if err != nil {
-		log.Fatal("failed to read .env file:", err)
-	}
-
-	return os.Getenv(key)
 }
