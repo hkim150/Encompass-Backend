@@ -47,6 +47,22 @@ func TestGetUserAccount(t *testing.T) {
 	require.EqualValues(t, user_account, get_account)
 }
 
+func TestListUserAccount(t *testing.T) {
+	for i := 0; i < 10; i++ {
+		_, deleteRandomUserAccount := createRandomUserAccount(t)
+		defer deleteRandomUserAccount(t)
+	}
+
+	arg := ListUserAccountsParams{
+		Limit:  5,
+		Offset: 5,
+	}
+
+	accounts, err := testQueries.ListUserAccounts(context.Background(), arg)
+	require.NoError(t, err)
+	require.Len(t, accounts, 5)
+}
+
 func TestUpdateUserAccount(t *testing.T) {
 	user_account, deleteRandomUserAccount := createRandomUserAccount(t)
 	defer deleteRandomUserAccount(t)
