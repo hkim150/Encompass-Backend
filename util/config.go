@@ -19,7 +19,7 @@ func LoadEnv(envFile string) {
 
 	err := godotenv.Load(string(rootPath) + `/` + envFile)
 	if err != nil {
-		log.Fatal("Failed to load env file")
+		log.Fatal("Failed to load env file: ", err)
 		os.Exit(-1)
 	}
 }
