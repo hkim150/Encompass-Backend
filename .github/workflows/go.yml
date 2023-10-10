@@ -13,6 +13,20 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: encompass
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: encompass
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
     - uses: actions/checkout@v3
 
@@ -27,6 +41,9 @@ jobs:
         echo DB_DRIVER=${{ secrets.DB_DRIVER }} >> .env
         echo DB_SOURCE=${{ secrets.DB_SOURCE }} >> .env
         cat .env
+
+    - name: Run Migrations
+      run: make migrateup
 
     - name: Test
       run: make test
