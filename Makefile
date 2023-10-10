@@ -7,4 +7,7 @@ migrateup:
 migratedown:
 	migrate -path db/migration -database "postgres://encompass:password@localhost:5432/encompass?sslmode=disable" down
 
-.PHONY: db migrateup migratedown
+test:
+	go test -v -cover ./...
+
+.PHONY: db migrateup migratedown test
